@@ -20,7 +20,7 @@ func NewSettings() (*Settings, error) {
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "888"
+		port = "20009"
 	}
 
 	nport, err := strconv.Atoi(port)

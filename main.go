@@ -5,13 +5,21 @@ import (
 	"fcc-ham-exam/config"
 	"fcc-ham-exam/data/models"
 	"fcc-ham-exam/data/stochastic"
+	"fcc-ham-exam/http"
 	"fmt"
-	"github.com/Sirupsen/logrus"
+	"github.com/sirupsen/logrus"
 	"io/ioutil"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
 func main() {
 	logrus.Info("Starting...")
+
+	abortChannel := make(chan string)
+	defer close(abortChannel)
+
 	settings, err := config.NewSettings()
 	if err != nil {
 		logrus.Fatalf("Unable to load settings: %v", err)
@@ -22,12 +30,36 @@ func main() {
 		logrus.Fatalf("Unable to load Technician question pool: %v", err)
 	}
 
-	//logrus.Infof("Technician question pool: %#v", technicianQuestionPool)
 
 	randomizer := stochastic.Randomizer{QuestionPool: technicianQuestionPool}
 
 	for i := 0; i < 10; i++ {
 		logrus.Infof("---> %#v", randomizer.SelectRandomQuestion())
+	}
+
+
+	server := http.Server{
+		AbortChannel: abortChannel,
+		Logger:       logrus.NewEntry(logrus.New()),
+		Settings:     settings,
+		Randomizer:   &randomizer,
+	}
+
+	go server.Run()
+
+	sigTerm := make(chan os.Signal, 1)
+	signal.Notify(sigTerm, syscall.SIGTERM)
+	signal.Notify(sigTerm, syscall.SIGINT)
+
+	select {
+	case <-sigTerm:
+		{
+			logrus.Info("Exiting per SIGTERM")
+		}
+	case err := <-abortChannel:
+		{
+			logrus.Error(err)
+		}
 	}
 }
 

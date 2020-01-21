@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fcc-ham-exam/config"
 	"fcc-ham-exam/data/models"
+	"fcc-ham-exam/data/stochastic"
 	"fmt"
 	"github.com/Sirupsen/logrus"
 	"io/ioutil"
@@ -21,7 +22,13 @@ func main() {
 		logrus.Fatalf("Unable to load Technician question pool: %v", err)
 	}
 
-	logrus.Infof("Technician question pool: %#v", technicianQuestionPool)
+	//logrus.Infof("Technician question pool: %#v", technicianQuestionPool)
+
+	randomizer := stochastic.Randomizer{QuestionPool: technicianQuestionPool}
+
+	for i := 0; i < 10; i++ {
+		logrus.Infof("---> %#v", randomizer.SelectRandomQuestion())
+	}
 }
 
 func LoadTechnicianQuestions(rootPath string) (*models.QuestionPool, error) {

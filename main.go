@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fcc-ham-exam/config"
-	"fcc-ham-exam/data"
+	"fcc-ham-exam/data/models"
 	"fmt"
 	"github.com/Sirupsen/logrus"
 	"io/ioutil"
@@ -24,13 +24,13 @@ func main() {
 	logrus.Infof("Technician question pool: %#v", technicianQuestionPool)
 }
 
-func LoadTechnicianQuestions(rootPath string) (*data.QuestionPool, error) {
+func LoadTechnicianQuestions(rootPath string) (*models.QuestionPool, error) {
 	file, err := ioutil.ReadFile(rootPath + "technician-questions.json")
 	if err != nil {
 		return nil, fmt.Errorf("unable to load Technician quesions file: %v", err)
 	}
 
-	technicianQuestionPool := data.QuestionPool{}
+	technicianQuestionPool := models.QuestionPool{}
 
 	err = json.Unmarshal([]byte(file), &technicianQuestionPool)
 	if err != nil {

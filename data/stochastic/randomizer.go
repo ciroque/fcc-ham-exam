@@ -33,17 +33,17 @@ func (r *Randomizer) SelectRandomQuestion() (*models.FullyQualifiedQuestion) {
 		Question:        question,
 	}
 
-	ShuffleAnswers(fullyQualifiedQuestion)
+	r.ShuffleAnswers(fullyQualifiedQuestion)
 
 	return fullyQualifiedQuestion
 }
 
 func (r *Randomizer) ShuffleAnswers(fqq *models.FullyQualifiedQuestion) {
-	swap := func(i, j int) {
+	rand.Seed(time.Now().UnixNano())
+	for i := len(fqq.Question.Answers) - 1; i > 0; i-- {
+		j := rand.Intn(i + 1)
 		fqq.Question.Answers[i],
-		fqq.Question.Answers[j] = fqq.Question.Answers[i],
+		fqq.Question.Answers[j] = fqq.Question.Answers[j],
 		fqq.Question.Answers[i]
 	}
-	rand.Seed(time.Now().UnixNano())
-	rand.Shuffle(len(fqq.Question.Answers), swap)
 }

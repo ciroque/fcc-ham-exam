@@ -35,7 +35,8 @@ func main() {
 	randomizer := stochastic.Randomizer{QuestionPool: technicianQuestionPool}
 
 	for i := 0; i < 10; i++ {
-		logrus.Infof("---> %#v", randomizer.SelectRandomQuestion())
+		question := randomizer.SelectRandomQuestion()
+		logrus.Infof("---> %#v", question)
 	}
 
 	server := http.Server{

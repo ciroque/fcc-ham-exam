@@ -5,5 +5,5 @@ import (
 )
 
 type JsonApiResponse struct {
-	Data FullyQualifiedQuestion	`json:"data"`
+	Data *models.FullyQualifiedQuestion	`json:"data"`
 }

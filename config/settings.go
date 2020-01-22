@@ -8,19 +8,19 @@ import (
 
 type Settings struct {
 	DataFilePath string
-	Host string
-	Port int
+	Host         string
+	Port         int
 }
 
 func NewSettings() (*Settings, error) {
 	dataFilePath := os.Getenv("DATA_FILE_PATH")
 	if dataFilePath == "" {
-		dataFilePath = "./data/sources/"
+		dataFilePath = "./"
 	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "20009"
+		port = "80"
 	}
 
 	nport, err := strconv.Atoi(port)

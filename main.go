@@ -25,18 +25,18 @@ func main() {
 		logrus.Fatalf("Unable to load settings: %v", err)
 	}
 
+	logrus.Infof("Loaded settings: %v", settings)
+
 	technicianQuestionPool, err := LoadTechnicianQuestions(settings.DataFilePath)
 	if err != nil {
 		logrus.Fatalf("Unable to load Technician question pool: %v", err)
 	}
-
 
 	randomizer := stochastic.Randomizer{QuestionPool: technicianQuestionPool}
 
 	for i := 0; i < 10; i++ {
 		logrus.Infof("---> %#v", randomizer.SelectRandomQuestion())
 	}
-
 
 	server := http.Server{
 		AbortChannel: abortChannel,

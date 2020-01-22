@@ -34,11 +34,6 @@ func main() {
 
 	randomizer := stochastic.Randomizer{QuestionPool: technicianQuestionPool}
 
-	for i := 0; i < 10; i++ {
-		question := randomizer.SelectRandomQuestion()
-		logrus.Infof("---> %#v", question)
-	}
-
 	server := http.Server{
 		AbortChannel: abortChannel,
 		Logger:       logrus.NewEntry(logrus.New()),

@@ -28,6 +28,9 @@ func (server *Server) Run() {
 
 func (server *Server) ServeRandomTechnicianQuestion(writer http.ResponseWriter, request *http.Request) {
 	server.configureCORS(writer)
+	if request.Method != "GET" {
+		return
+	}
 	question := server.Randomizer.SelectRandomQuestion()
 	response, err := json.Marshal(JsonApiResponse{Data: question})
 	logrus.Info("Responding to request with: %v", question)

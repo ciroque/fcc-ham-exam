@@ -24,8 +24,9 @@ COPY ./data/sources/*.json /go/bin/
 ############################
 FROM alpine:3.10
 
+RUN mkdir -p /go/bin/data/sources/
 COPY --from=builder /go/bin/fcc-ham-exam /go/bin/fcc-ham-exam
-COPY --from=builder /go/bin/*.json /go/bin/
+COPY --from=builder /go/bin/*.json /go/bin/data/sources/
 
 # Run the hello binary.
 ENTRYPOINT ["/go/bin/fcc-ham-exam"]

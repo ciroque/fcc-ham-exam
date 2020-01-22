@@ -5,7 +5,7 @@ FROM golang:alpine AS builder
 
 # Install git.
 # Git is required for fetching the dependencies.
-RUN apk update && apk add --no-cache git tree
+RUN apk update && apk add --no-cache git
 WORKDIR $GOPATH/src/fcc-ham-exam
 COPY . .
 
@@ -15,8 +15,6 @@ RUN go get -d -v
 
 # Build the binary.
 RUN go build -o /go/bin/fcc-ham-exam
-
-RUN tree 
 COPY ./data/sources/*.json /go/bin/
 
 ############################

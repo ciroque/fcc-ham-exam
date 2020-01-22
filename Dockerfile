@@ -23,7 +23,7 @@ FROM alpine:3.10
 
 # Copy our static executable.
 COPY --from=builder /go/bin/fcc-ham-exam /go/bin/fcc-ham-exam
-COPY --from=builder /go/bin/fcc-ham-exam/data/sources/*.json /go/bin/fcc-ham-exam/data/sources/
+COPY --from=builder $GOPATH/src/fcc-ham-exam/data/sources/*.json /go/bin/fcc-ham-exam/data/sources/
 
 # Run the hello binary.
 ENTRYPOINT ["/go/bin/fcc-ham-exam"]

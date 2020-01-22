@@ -29,7 +29,7 @@ func (server *Server) Run() {
 func (server *Server) ServeRandomTechnicianQuestion(writer http.ResponseWriter, request *http.Request) {
 	question := server.Randomizer.SelectRandomQuestion()
 	response, err := json.Marshal(question)
-	logrus.Info("Responding to request with: %v", response)
+	logrus.Info("Responding to request with: %v", question)
 	if err != nil {
 		server.Logger.Warnf("Error responding to request %#v", err)
 	}

@@ -1,5 +1,5 @@
 package models
 
 type QuestionPool struct {
-	SubElements []SubElements `json:subElements`
+	SubElements []SubElements `json:"subElements"`
 }

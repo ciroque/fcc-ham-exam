@@ -17,7 +17,7 @@ RUN go get -d -v
 RUN go build -o /go/bin/fcc-ham-exam
 
 RUN tree 
-COPY ./fcc-ham-exam/data/sources/*.json /go/bin/fcc-ham-exam/data/sources
+COPY ./data/sources/*.json /go/bin/fcc-ham-exam/data/sources/
 
 ############################
 # STEP 2 build a small image
@@ -26,7 +26,7 @@ FROM alpine:3.10
 
 # Copy our static executable.
 COPY --from=builder /go/bin/fcc-ham-exam /go/bin/fcc-ham-exam
-### COPY --from=builder /go/bin/fcc-ham-exam/*.json /go/bin/fcc-ham-exam/data/sources/
+COPY --from=builder /go/bin/fcc-ham-exam/data/source/*.json /go/bin/fcc-ham-exam/data/sources/
 
 # Run the hello binary.
 ENTRYPOINT ["/go/bin/fcc-ham-exam"]

@@ -16,7 +16,7 @@ RUN go get -d -v
 # Build the binary.
 RUN go build -o /go/bin/fcc-ham-exam
 
-tree 
+RUN tree 
 
 ### COPY $GOPATH/src/fcc-ham-exam/data/sources/*.json /go/bin/fcc-ham-exam/data/sources
 

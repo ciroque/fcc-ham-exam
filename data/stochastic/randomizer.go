@@ -3,6 +3,7 @@ package stochastic
 import (
 	"fcc-ham-exam/data/models"
 	"math/rand"
+	"time"
 )
 
 type Randomization interface {
@@ -26,9 +27,23 @@ func (r *Randomizer) SelectRandomQuestion() (*models.FullyQualifiedQuestion) {
 	questionIndex := rand.Intn(questionCount)
 	question := group.Questions[questionIndex]
 
-	return &models.FullyQualifiedQuestion{
+	fullyQualifiedQuestion := &models.FullyQualifiedQuestion{
 		SubElementTitle: subElement.Title,
 		GroupTitle:      group.Title,
 		Question:        question,
 	}
+
+	ShuffleAnswers(fullyQualifiedQuestion)
+
+	return fullyQualifiedQuestion
+}
+
+func (r *Randomizer) ShuffleAnswers(question *models.FullyQualifiedQuestion) {
+	swap := func(i, j int) {
+		question.Answers[i],
+		question.Answers[j] = question.Answers[i],
+		question.Answers[i]
+	}
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(question.Answers), swap)
 }

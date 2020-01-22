@@ -17,8 +17,7 @@ RUN go get -d -v
 RUN go build -o /go/bin/fcc-ham-exam
 
 RUN tree 
-
-### COPY $GOPATH/src/fcc-ham-exam/data/sources/*.json /go/bin/fcc-ham-exam/data/sources
+COPY ./fcc-ham-exam/data/sources/*.json /go/bin/fcc-ham-exam/data/sources
 
 ############################
 # STEP 2 build a small image
